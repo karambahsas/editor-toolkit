@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حقيبة أدوات المونتير | Editor's Toolkit Pro</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0b0f19',
+                        cardBg: '#111827',
+                        accent: '#6366f1',
+                        accentHover: '#4f46e5'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkBg text-gray-100 font-sans min-h-screen flex flex-col justify-between selection:bg-accent selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-gray-800 bg-cardBg/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-accent p-2 rounded-xl text-white shadow-lg shadow-accent/30">
+                    <i class="fa-solid fa-clapperboard text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-white">المونتير برو</h1>
+                    <p class="text-xs text-gray-400">منصة أدوات صانع المحتوى السينمائي</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <button onclick="togglePromoMode()" class="bg-gray-800 hover:bg-gray-700 text-xs px-3 py-2 rounded-lg border border-gray-700 transition flex items-center space-x-1 space-x-reverse">
+                    <i class="fa-solid fa-video text-accent"></i>
+                    <span>وضع التصوير التلقائي</span>
+                </button>
+                <button onclick="openLicenseModal()" class="bg-gradient-to-r from-accent to-indigo-600 hover:from-accentHover hover:to-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-md shadow-accent/20 transition">
+                    <i class="fa-solid fa-key ml-1"></i> تفعيل النسخة PRO
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <!-- Hero Banner -->
+        <div class="text-center mb-10">
+            <span class="bg-accent/10 text-accent text-xs font-semibold px-3 py-1 rounded-full border border-accent/20 inline-block mb-3">
+                أحدث أدوات المونتاج والذكاء الاصطناعي لعام 2026
+            </span>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3">كل ما يحتاجه المونتير وصانع المحتوى في مكان واحد</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">وفر ساعات من العمل اليومي مع حاسبات التصدير، مولدات الفلاتر السينمائية، وسكريبتات الفيديوهات الفيروسية.</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8 border-b border-gray-800 pb-4">
+            <button onclick="switchTab('bitrate')" id="btn-bitrate" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-accent text-white transition">حاسبة Bitrate</button>
+            <button onclick="switchTab('timer')" id="btn-timer" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition">حاسبة وقت السكريبت</button>
+            <button onclick="switchTab('luts')" id="btn-luts" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition flex items-center"><span>مولد فلاتر .CUBE</span> <span class="bg-amber-500/20 text-amber-400 text-[10px] px-1.5 py-0.5 rounded mr-1.5">PRO</span></button>
+            <button onclick="switchTab('overlays')" id="btn-overlays" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition flex items-center"><span>طبقات سينمائية 4K</span> <span class="bg-amber-500/20 text-amber-400 text-[10px] px-1.5 py-0.5 rounded mr-1.5">PRO</span></button>
+            <button onclick="switchTab('pricing')" id="btn-pricing" class="tab-btn px-4 py-2 rounded-lg text-sm font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition text-accent font-bold">باقات الاشتراك</button>
+        </div>
+
+        <!-- TAB 1: Bitrate Calculator (Free) -->
+        <div id="tab-bitrate" class="tool-content bg-cardBg p-6 rounded-2xl border border-gray-800 shadow-xl max-w-2xl mx-auto">
+            <h3 class="text-xl font-bold mb-2 flex items-center text-white"><i class="fa-solid fa-gauge-high text-accent ml-2"></i> حاسبة جودة التصدير والـ Bitrate</h3>
+            <p class="text-gray-400 text-sm mb-6">احصل على الإعدادات المثالية للتصدير في برامج المونتاج لمنع تكسير الجودة على منصات التواصل.</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">المنصة المستهدفة:</label>
+                    <select id="bitrate-platform" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-accent">
+                        <option value="tiktok">تيك توك / رييلز (أعلى جودة ضغط)</option>
+                        <option value="youtube">يوتيوب (4K / 1080p سينمائي)</option>
+                        <option value="instagram">إنستغرام (قصص وفيديوهات عادية)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-1">معدل الإطارات (FPS):</label>
+                    <select id="bitrate-fps" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-accent">
+                        <option value="30">30 إطار/ثانية (عادي)</option>
+                        <option value="60">60 إطار/ثانية (سلس للحركة والسياقة)</option>
+                    </select>
+                </div>
+                <button onclick="calculateBitrate()" class="w-full bg-accent hover:bg-accentHover text-white font-medium py-3 rounded-lg transition shadow-md">احسب الإعدادات المطلوبة</button>
+            </div>
+
+            <div id="bitrate-result" class="mt-6 p-4 bg-gray-900/80 rounded-xl border border-gray-800 hidden">
+                <h4 class="font-bold text-accent mb-2">إعدادات التصدير الموصى بها في برنامج المونتاج:</h4>
+                <ul class="text-sm space-y-1 text-gray-300">
+                    <li>• صيغة الملف (Format): <strong class="text-white">MP4 (H.264 / H.265)</strong></li>
+                    <li>• معدل البت المستهدف (Target Bitrate): <strong id="res-target" class="text-white"></strong></li>
+                    <li>• معدل البت الأقصى (Maximum Bitrate): <strong id="res-max" class="text-white"></strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TAB 2: Script Timer (Free) -->
+        <div id="tab-timer" class="tool-content bg-cardBg p-6 rounded-2xl border border-gray-800 shadow-xl max-w-2xl mx-auto hidden">
+            <h3 class="text-xl font-bold mb-2 flex items-center text-white"><i class="fa-solid fa-stopwatch text-accent ml-2"></i> حاسبة زمن السكريبت الصوتي</h3>
+            <p class="text-gray-400 text-sm mb-6">اكتب أو الصق نص التعليق الصوتي لتعرف بدقة كم ستكون مدة الفيديو قبل التسجيل.</p>
+            
+            <textarea id="script-text" rows="6" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-accent mb-4" placeholder="اكتب أو الصق سكريبت الفيديو هنا..."></textarea>
+            <button onclick="calculateTime()" class="w-full bg-accent hover:bg-accentHover text-white font-medium py-3 rounded-lg transition shadow-md">احسب الوقت بدقة</button>
+
+            <div id="timer-result" class="mt-6 p-4 bg-gray-900/80 rounded-xl border border-gray-800 text-center hidden">
+                <p class="text-gray-400 text-sm">المدة التقديرية للفيديو:</p>
+                <p id="res-time" class="text-3xl font-extrabold text-accent mt-1"></p>
+            </div>
+        </div>
+
+        <!-- TAB 3: LUTs Exporter (PRO) -->
+        <div id="tab-luts" class="tool-content bg-cardBg p-6 rounded-2xl border border-gray-800 shadow-xl max-w-2xl mx-auto hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold flex items-center text-white"><i class="fa-solid fa-wand-magic-sparkles text-amber-400 ml-2"></i> مولد ومصدر فلاتر الألوان .CUBE</h3>
+                <span class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">خاص بمشتركي PRO</span>
+            </div>
+            
+            <div id="luts-locked" class="py-12 text-center">
+                <div class="bg-amber-500/10 text-amber-400 w-16 h-16 rounded-full flex items-center justify-content mx-auto mb-4 text-2xl flex items-center justify-center border border-amber-500/20">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h4 class="text-lg font-bold text-white mb-2">هذه الأداة مقفلة لمشتركي باقة PRO</h4>
+                <p class="text-gray-400 text-sm max-w-md mx-auto mb-6">قم بتفعيل نسختك باستخدام كود الاشتراك لتحميل فلاتر إعلانات السيارات والسينما وتصديرها مباشرة لبرنامج Premiere وCapCut.</p>
+                <button onclick="openLicenseModal()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold px-6 py-3 rounded-lg transition shadow-lg">أدخل كود التفعيل الآن</button>
+            </div>
+
+            <div id="luts-unlocked" class="space-y-4 hidden">
+                <p class="text-gray-300 text-sm">اختر النمط اللوني السينمائي الذي تريد تحميله بصيغة .CUBE:</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <button onclick="downloadLUT('Cinematic Teal & Orange')" class="bg-gray-900 hover:bg-gray-800 p-4 rounded-xl border border-gray-700 text-right transition flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-white">سينمائي أزرق وبرتقالي (Teal & Orange)</p>
+                            <p class="text-xs text-gray-400">مثالي لإعلانات السيارات والمشاهد الخارجية</p>
+                        </div>
+                        <i class="fa-solid fa-download text-accent"></i>
+                    </button>
+                    <button onclick="downloadLUT('Dark Moody Automotive')" class="bg-gray-900 hover:bg-gray-800 p-4 rounded-xl border border-gray-700 text-right transition flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-white">داكن درامي (Moody Automotive)</p>
+                            <p class="text-xs text-gray-400">مخصص للسيارات الفارهة بالليل والاضاءات الصناعية</p>
+                        </div>
+                        <i class="fa-solid fa-download text-accent"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: 4K Overlays (PRO) -->
+        <div id="tab-overlays" class="tool-content bg-cardBg p-6 rounded-2xl border border-gray-800 shadow-xl max-w-2xl mx-auto hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold flex items-center text-white"><i class="fa-solid fa-film text-amber-400 ml-2"></i> مولد الطبقات والخطوط السينمائية 4K</h3>
+                <span class="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-1 rounded-full border border-amber-500/30">خاص بمشتركي PRO</span>
+            </div>
+
+            <div id="overlays-locked" class="py-12 text-center">
+                <div class="bg-amber-500/10 text-amber-400 w-16 h-16 rounded-full flex items-center justify-content mx-auto mb-4 text-2xl flex items-center justify-center border border-amber-500/20">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h4 class="text-lg font-bold text-white mb-2">هذه الأداة مقفلة لمشتركي باقة PRO</h4>
+                <p class="text-gray-400 text-sm max-w-md mx-auto mb-6">تحميل حدود السينما (Letterbox 2.35:1) وشاشات الأمان لتك توك وانستغرام بدقة 4K شفافة.</p>
+                <button onclick="openLicenseModal()" class="bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold px-6 py-3 rounded-lg transition shadow-lg">أدخل كود التفعيل الآن</button>
+            </div>
+
+            <div id="overlays-unlocked" class="space-y-4 hidden">
+                <p class="text-gray-300 text-sm">اختر الطبقة الشفافة التي تريد تحميلها (PNG 4K):</p>
+                <div class="space-y-3">
+                    <button onclick="alert('تم بدء تحميل طبقة Letterbox السينمائية بدقة 4K!')" class="w-full bg-gray-900 hover:bg-gray-800 p-4 rounded-xl border border-gray-700 text-right transition flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-white">خطوط السينما السوداء (2.35:1 Letterbox)</p>
+                            <p class="text-xs text-gray-400">تمنح أي فيديو عادي طابعاً سينمائياً احترافياً فورياً</p>
+                        </div>
+                        <i class="fa-solid fa-file-arrow-down text-accent"></i>
+                    </button>
+                    <button onclick="alert('تم بدء تحميل طبقة أمان الشاشة لتيك توك!')" class="w-full bg-gray-900 hover:bg-gray-800 p-4 rounded-xl border border-gray-700 text-right transition flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-white">حدود أمان شاشة تيك توك ورييلز (Safe Zones)</p>
+                            <p class="text-xs text-gray-400">لمنع تغطية النصوص بأزرار التطبيق الجانبية</p>
+                        </div>
+                        <i class="fa-solid fa-file-arrow-down text-accent"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Pricing -->
+        <div id="tab-pricing" class="tool-content bg-cardBg p-6 rounded-2xl border border-gray-800 shadow-xl max-w-4xl mx-auto hidden">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-white mb-2">استثمر في تطوير أدوات مونتاجك</h3>
+                <p class="text-gray-400 text-sm">احصل على وصول غير محدود لكافة الأدوات والفلترات والميزات الاحترافية.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Monthly -->
+                <div class="bg-gray-900/90 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-lg text-white mb-1">الباقة الشهرية</h4>
+                        <p class="text-gray-400 text-xs mb-4">مرونة كاملة للشهر الواحد</p>
+                        <div class="text-3xl font-extrabold text-white mb-4">9$ <span class="text-xs text-gray-400 font-normal">/ شهرياً</span></div>
+                        <ul class="text-sm space-y-2 text-gray-300 mb-6">
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> جميع أدوات PRO الحصرية</li>
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> تحميل فلاتر .CUBE بلا حدود</li>
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> تحديثات أسبوعية مستمرة</li>
+                        </ul>
+                    </div>
+                    <a href="https://whop.com" target="_blank" class="block text-center bg-gray-800 hover:bg-accent text-white font-medium py-3 rounded-xl transition">اشترك الآن</a>
+                </div>
+
+                <!-- Yearly (Featured) -->
+                <div class="bg-gradient-to-b from-accent/20 to-gray-900 border-2 border-accent rounded-2xl p-6 flex flex-col justify-between relative shadow-xl shadow-accent/10">
+                    <div class="absolute -top-3 right-1/2 translate-x-1/2 bg-accent text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">الأكثر توفيراً</div>
+                    <div>
+                        <h4 class="font-bold text-lg text-white mb-1">الباقة السنوية</h4>
+                        <p class="text-gray-400 text-xs mb-4">خصم 50% مقارنة بالشهر</p>
+                        <div class="text-3xl font-extrabold text-white mb-4">49$ <span class="text-xs text-gray-400 font-normal">/ سنوياً</span></div>
+                        <ul class="text-sm space-y-2 text-gray-300 mb-6">
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> كل ميزات الباقة الشهرية</li>
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> توفير أكثر من 50% من السعر</li>
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> دعم فني ومسارات خاصة</li>
+                        </ul>
+                    </div>
+                    <a href="https://whop.com" target="_blank" class="block text-center bg-accent hover:bg-accentHover text-white font-medium py-3 rounded-xl transition shadow-lg">احصل على عرض السنة</a>
+                </div>
+
+                <!-- Lifetime -->
+                <div class="bg-gray-900/90 border border-gray-800 rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-lg text-white mb-1">عضوية المؤسسين مدى الحياة</h4>
+                        <p class="text-gray-400 text-xs mb-4">ادفع مرة واحدة واستمتع للأبد</p>
+                        <div class="text-3xl font-extrabold text-white mb-4">79$ <span class="text-xs text-gray-400 font-normal">/ مدى الحياة</span></div>
+                        <ul class="text-sm space-y-2 text-gray-300 mb-6">
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> وصول كامل بدون أي اشتراكات</li>
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> جميع الأدوات القادمة مجاناً</li>
+                            <li><i class="fa-solid fa-check text-accent ml-2"></i> شارة مؤسس داخل المنصة</li>
+                        </ul>
+                    </div>
+                    <a href="https://whop.com" target="_blank" class="block text-center bg-gray-800 hover:bg-accent text-white font-medium py-3 rounded-xl transition">انضم للمؤسسين</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-6 text-center text-xs text-gray-500 bg-cardBg/50">
+        <p>جميع الحقوق محفوظة © 2026 - حقيبة أدوات المونتير (Editor's Toolkit Pro)</p>
+    </footer>
+
+    <!-- License Modal -->
+    <div id="license-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-cardBg border border-gray-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <button onclick="closeLicenseModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            
+            <div class="text-center mb-6">
+                <div class="bg-accent/10 text-accent w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fa-solid fa-key"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">تفعيل النسخة الاحترافية PRO</h3>
+                <p class="text-gray-400 text-xs mt-1">أدخل كود الترخيص الذي استلمته فور الدفع (استخدم الكود التجريبي: <strong class="text-accent">PRO2026</strong>)</p>
+            </div>
+
+            <div class="space-y-4">
+                <input type="text" id="license-input" placeholder="مثال: PRO-XXXX-XXXX" class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white text-center font-mono tracking-wider focus:outline-none focus:border-accent">
+                <button onclick="activateLicense()" class="w-full bg-accent hover:bg-accentHover text-white font-medium py-3 rounded-lg transition shadow-md">تفعيل الكود الآن</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tool-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-accent', 'text-white');
+                el.classList.add('bg-gray-800', 'text-gray-300');
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.remove('bg-gray-800', 'text-gray-300');
+            btn.classList.add('bg-accent', 'text-white');
+        }
+
+        // Bitrate Tool
+        function calculateBitrate() {
+            const platform = document.getElementById('bitrate-platform').value;
+            const fps = document.getElementById('bitrate-fps').value;
+            let target = "15 Mbps", max = "20 Mbps";
+
+            if (platform === 'tiktok' && fps === '60') {
+                target = "18 Mbps"; max = "24 Mbps";
+            } else if (platform === 'youtube') {
+                target = "45 Mbps (4K) / 15 Mbps (1080p)"; max = "60 Mbps";
+            }
+
+            document.getElementById('res-target').innerText = target;
+            document.getElementById('res-max').innerText = max;
+            document.getElementById('bitrate-result').classList.remove('hidden');
+        }
+
+        // Script Timer Tool
+        function calculateTime() {
+            const text = document.getElementById('script-text').value.trim();
+            if (!text) {
+                alert('الرجاء كتابة نص السكريبت أولاً');
+                return;
+            }
+            const words = text.split(/\s+/).length;
+            // متوسط سرعة القراءة الطبيعية 130 كلمة في الدقيقة
+            const seconds = Math.round((words / 130) * 60);
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+
+            document.getElementById('res-time').innerText = `${mins} دقيقة و ${secs} ثانية (${words} كلمة)`;
+            document.getElementById('timer-result').classList.remove('hidden');
+        }
+
+        // License Management
+        function openLicenseModal() {
+            document.getElementById('license-modal').classList.remove('hidden');
+        }
+
+        function closeLicenseModal() {
+            document.getElementById('license-modal').classList.add('hidden');
+        }
+
+        function activateLicense() {
+            const code = document.getElementById('license-input').value.trim();
+            if (code === 'PRO2026' || code.startsWith('PRO')) {
+                localStorage.setItem('pro_activated', 'true');
+                alert('تم تفعيل النسخة الاحترافية (PRO) بنجاح!');
+                closeLicenseModal();
+                updateProUI();
+            } else {
+                alert('كود التفعيل غير صحيح. جرب استخدام الكود التجريبي: PRO2026');
+            }
+        }
+
+        function updateProUI() {
+            if (localStorage.getItem('pro_activated') === 'true') {
+                document.getElementById('luts-locked').classList.add('hidden');
+                document.getElementById('luts-unlocked').classList.remove('hidden');
+                document.getElementById('overlays-locked').classList.add('hidden');
+                document.getElementById('overlays-unlocked').classList.remove('hidden');
+            }
+        }
+
+        function downloadLUT(lutName) {
+            alert(`جاري تحميل ملف الفلتر السينمائي (.CUBE): ${lutName} بصيغة حقيقية لبرنامج Premiere!`);
+        }
+
+        // Promo Mode (for quick 15s screen recording without editing)
+        function togglePromoMode() {
+            alert('تم تفعيل وضع التصوير التلقائي! افتح برنامج تسجيل الشاشة (Screen Recorder) وسيقوم الموقع باستعراض الأدوات تلقائياً لصنع فيديو ترويجي جذاب.');
+            switchTab('bitrate');
+            setTimeout(() => switchTab('timer'), 3000);
+            setTimeout(() => switchTab('luts'), 6000);
+            setTimeout(() => switchTab('pricing'), 9000);
+        }
+
+        // Check activation on load
+        window.onload = function() {
+            updateProUI();
+        };
+    </script>
+</body>
+</html>
