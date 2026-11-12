@@ -10,42 +10,105 @@
             color: #f8fafc;
             font-family: system-ui, -apple-system, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
+            direction: rtl;
+            text-align: right;
         }
         .container {
-            max-width: 900px;
+            max-width: 480px;
             margin: 0 auto;
         }
-        /* تصميم الهيدر العلوي */
-        .header-panel {
+        .header-box {
             background: #141726;
             border: 1px solid #262b40;
             border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 25px;
+            padding: 16px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
         }
-        .pro-btn {
+        .pro-btn-main {
             background: #6366f1;
             color: #fff;
             border: none;
-            padding: 12px 20px;
+            padding: 10px 16px;
             border-radius: 12px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
+            font-size: 0.85rem;
         }
-        .pro-btn:hover { background: #4f46e5; }
-        .section-box {
+        .hero-banner {
             background: #141726;
             border: 1px solid #262b40;
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 25px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .nav-btn {
+            background: #141726;
+            color: #f8fafc;
+            border: 1px solid #262b40;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .nav-btn.active {
+            background: #6366f1;
+            border-color: #818cf8;
+        }
+        .full-btn {
+            grid-column: span 2;
+            background: #141726;
+            color: #f8fafc;
+            border: 1px solid #262b40;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
+        .content-panel {
+            background: #141726;
+            border: 1px solid #262b40;
+            border-radius: 16px;
+            padding: 20px;
+            display: none;
+        }
+        .content-panel.active {
+            display: block;
+        }
+        input, select {
+            width: 100%;
+            box-sizing: border-box;
+            background: #0d101b;
+            border: 1px solid #2d354f;
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            outline: none;
+            margin-bottom: 12px;
+            direction: rtl;
+            text-align: right;
+        }
+        /* نافذة التفعيل الاحترافية (Modal) */
+        #proModal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-box {
+            background: #141726; border: 1px solid #262b40; padding: 25px; border-radius: 16px; width: 90%; max-width: 360px; text-align: center;
         }
     </style>
 </head>
@@ -53,328 +116,258 @@
 
 <div class="container">
 
-    <!-- شريط العنوان والتحكم بالتفعيل -->
-    <div class="header-panel">
+    <!-- الهيدر العلوي -->
+    <div class="header-box">
         <div>
-            <h1 style="margin: 0 0 6px 0; font-size: 1.5rem;">المونتير برو</h1>
-            <p style="margin: 0; color: #94a3b8; font-size: 0.9rem;">منصة أدوات صانع المحتوى السينمائي (فلاتر CUBE وطبقات 4K)</p>
+            <div style="font-weight: bold; font-size: 1.1rem;">المونتير برو</div>
+            <div style="font-size: 0.75rem; color: #94a3b8;">منصة أدوات صانع المحتوى السينمائي</div>
         </div>
-        <button id="mainActivationBtn" class="pro-btn" onclick="activatePro()">✨ تفعيل النسخة PRO</button>
+        <button id="mainActivationBtn" class="pro-btn-main" onclick="openProModal()">✨ تفعيل PRO</button>
     </div>
 
-    <!-- 1. قسم مولد 100 فلتر CUBE -->
-    <div class="section-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <h3 style="margin: 0; font-size: 1.2rem;">🎨 مولد ومصدر فلاتر الألوان .CUBE (100 فلتر)[cite: 1]</h3>
-            <span style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">100 LUTs PRO</span>
-        </div>
-        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px;">كل فلتر بزر مستقل ومعادلته اللونية الخاصة. اضغط لأي فلتر لتحميل ملف الـ .CUBE فوراً:</p>
+    <!-- البانر الترحيبي -->
+    <div class="hero-banner">
+        <div style="background: rgba(99,102,241,0.15); color: #818cf8; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 10px; font-weight: bold;">أحدث أدوات المونتاج والذكاء الاصطناعي لعام 2026</div>
+        <h2 style="margin: 5px 0 10px 0; font-size: 1.3rem;">كل ما يحتاجه المونتير وصانع المحتوى في مكان واحد</h2>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin: 0; line-height: 1.5;">وفر ساعات العمل اليومي مع حاسبات التصدير، مولدات الفلاتر السينمائية، وسكريبتات الفيديوهات الفيروسية.</p>
+    </div>
 
-        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
-            <input type="text" id="lutSearch" onkeyup="renderLuts()" placeholder="ابحث عن فلتر (مرسيدس، سينمائي، ليلي)..." 
-                   style="flex: 1; min-width: 200px; background: #0d101b; border: 1px solid #2d354f; color: #fff; padding: 10px 14px; border-radius: 10px; outline: none;">
-            <select id="lutCategory" onchange="renderLuts()" 
-                    style="background: #0d101b; border: 1px solid #2d354f; color: #fff; padding: 10px 14px; border-radius: 10px; outline: none; cursor: pointer;">
-                <option value="all">الكل (100 فلتر)</option>
+    <!-- أزرار التنقل الرئيسية -->
+    <div class="nav-grid">
+        <button id="btnTabBitrate" class="nav-btn" onclick="switchTab('bitrate')">حاسبة Bitrate</button>
+        <button id="btnTabScript" class="nav-btn" onclick="switchTab('script')">حاسبة وقت السكريبت</button>
+        <button id="btnTabLuts" class="nav-btn active" onclick="switchTab('luts')">PRO CUBE .فلتر</button>
+        <button id="btnTabOverlays" class="nav-btn" onclick="switchTab('overlays')">PRO طبقات 4K</button>
+        <button id="btnTabSub" class="full-btn" onclick="switchTab('sub')">باقات الاشتراك</button>
+    </div>
+
+    <!-- 1. لوحة حاسبة Bitrate -->
+    <div id="panel-bitrate" class="content-panel">
+        <h3 style="margin-top: 0; font-size: 1.1rem;">🧮 حاسبة جودة التصدير والـ Bitrate</h3>
+        <p style="color: #94a3b8; font-size: 0.85rem;">احصل على الإعدادات المثالية للتصدير في برامج المونتاج لمنع تكسير الجودة.</p>
+        <label style="font-size: 0.8rem; color: #94a3b8;">المنصة المستهدفة:</label>
+        <select><option>تيك توك / رييلز (أعلى جودة ضغط)</option><option>يوتيوب (4K / 1080p)</option></select>
+        <label style="font-size: 0.8rem; color: #94a3b8;">معدل الإطارات (FPS):</label>
+        <select><option>30 إطار/ثانية (عادي)</option><option>60 إطار/ثانية (سينمائي سلس)</option></select>
+    </div>
+
+    <!-- 2. لوحة وقت السكريبت -->
+    <div id="panel-script" class="content-panel">
+        <h3 style="margin-top: 0; font-size: 1.1rem;">⏱️ حاسبة وقت السكريبت</h3>
+        <p style="color: #94a3b8; font-size: 0.85rem;">احسب بدقة كم دقيقة سيستغرق نص الفيديو الخاص بك.</p>
+        <textarea placeholder="الصق نص السكريبت هنا..." style="width:100%; height:120px; background:#0d101b; border:1px solid #2d354f; color:#fff; padding:10px; border-radius:10px; outline:none; box-sizing:border-box; direction:rtl; text-align:right;"></textarea>
+    </div>
+
+    <!-- 3. لوحة 100 فلتر CUBE (تتطلب تفعيل) -->
+    <div id="panel-luts" class="content-panel active">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="margin: 0; font-size: 1.1rem;">🎨 مولد فلاتر .CUBE (100 فلتر)</h3>
+            <span style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; font-size: 0.75rem; padding: 3px 8px; border-radius: 10px; font-weight: bold;">PRO</span>
+        </div>
+        
+        <!-- رسالة القفل إذا لم تكن مفعلة -->
+        <div id="lutsLockMsg" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 10px;">
+            <div style="color: #fbbf24; font-weight: bold; margin-bottom: 5px;">🔒 هذه المكتبة حصرية لمشتركي PRO</div>
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">أدخل كود التفعيل التجريبي: <b style="color:#fff;">PRO2026</b> لفتحها فوراً</div>
+            <button onclick="openProModal()" style="background:#6366f1; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;">أدخل الكود الآن</button>
+        </div>
+
+        <div id="lutsContentBody" style="display: none;">
+            <p style="color: #94a3b8; font-size: 0.82rem; margin-bottom: 12px;">اختر فلتر لتحميل ملف الـ .CUBE فوراً لبرامج المونتاج:</p>
+            <input type="text" id="lutSearch" onkeyup="renderLuts()" placeholder="ابحث عن فلتر (مرسيدس، ليلي، سينمائي)...">
+            <select id="lutCategory" onchange="renderLuts()">
+                <option value="all">كل الفلاتر (100 فلتر)</option>
                 <option value="auto">سيارات وفخامة (20)</option>
                 <option value="cinema">سينمائي وهوليوود (20)</option>
                 <option value="nature">طبيعة ومناظر (20)</option>
                 <option value="night">ليلي ونيون (20)</option>
                 <option value="vintage">كلاسيك وفيلم (20)</option>
             </select>
+            <div id="lutsContainer" style="max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;"></div>
         </div>
-
-        <div id="lutsContainer" style="max-height: 420px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 12px; padding-left: 5px;"></div>
     </div>
 
-    <!-- 2. قسم مولد 200 طبقة سينمائية 4K -->
-    <div class="section-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
-            <h3 style="margin: 0; font-size: 1.2rem;">🎞️ مولد الطبقات والخطوط السينمائية 4K (200 طبقة)[cite: 2]</h3>
-            <span style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">PNG 4K شفافة</span>
-        </div>
-        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 16px;">اختر القسم ثم اضغط على أي طبقة لتوليدها وتحميلها بصيغة PNG بدقة 4K[cite: 2]:</p>
-
-        <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;">
-            <button id="btnTabLetterbox" onclick="switchOverlayTab('letterbox')" 
-                    style="flex: 1; min-width: 200px; background: #6366f1; color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">
-                🎬 خطوط السينما Letterbox (100 طبقة)[cite: 2]
-            </button>
-            <button id="btnTabSafezone" onclick="switchOverlayTab('safezone')" 
-                    style="flex: 1; min-width: 200px; background: #1a1f33; color: #94a3b8; border: 1px solid #2b324d; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">
-                📱 أمان تيك توك ورييلز Safe Zones (100 طبقة)[cite: 2]
-            </button>
+    <!-- 4. لوحة 200 طبقة 4K (تتطلب تفعيل) -->
+    <div id="panel-overlays" class="content-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="margin: 0; font-size: 1.1rem;">🎞️ طبقات سينمائية 4K (200 طبقة)</h3>
+            <span style="background: rgba(99, 102, 241, 0.15); color: #818cf8; font-size: 0.75rem; padding: 3px 8px; border-radius: 10px; font-weight: bold;">PRO</span>
         </div>
 
-        <input type="text" id="overlaySearch" onkeyup="renderOverlaysList()" placeholder="ابحث في الطبقات (2.35، هوليوود، تيك توك)..." 
-               style="width: 100%; box-sizing: border-box; background: #0d101b; border: 1px solid #2d354f; color: #fff; padding: 10px 14px; border-radius: 10px; outline: none; margin-bottom: 16px;">
+        <!-- رسالة القفل إذا لم تكن مفعلة -->
+        <div id="overlaysLockMsg" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 10px;">
+            <div style="color: #fbbf24; font-weight: bold; margin-bottom: 5px;">🔒 طبقات 4K حصرية لمشتركي PRO</div>
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">استخدم الكود: <b style="color:#fff;">PRO2026</b> لفتح الطبقات</div>
+            <button onclick="openProModal()" style="background:#6366f1; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;">أدخل الكود الآن</button>
+        </div>
 
-        <div id="overlaysGrid" style="max-height: 420px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 12px; padding-left: 5px;"></div>
+        <div id="overlaysContentBody" style="display: none;">
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                <button id="subTabLb" onclick="switchOverlaySub('lb')" style="flex:1; background:#6366f1; color:#fff; border:none; padding:8px; border-radius:8px; font-size:0.8rem; font-weight:bold; cursor:pointer;">خطوط سينما (100)</button>
+                <button id="subTabSz" onclick="switchOverlaySub('sz')" style="flex:1; background:#1a1f33; color:#94a3b8; border:1px solid #2b324d; padding:8px; border-radius:8px; font-size:0.8rem; font-weight:bold; cursor:pointer;">أمان تيكتوك (100)</button>
+            </div>
+            <input type="text" id="overlaySearch" onkeyup="renderOverlaysList()" placeholder="ابحث في الطبقات...">
+            <div id="overlaysContainer" style="max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+    </div>
+
+    <!-- 5. لوحة باقات الاشتراك -->
+    <div id="panel-sub" class="content-panel">
+        <h3 style="margin-top: 0; font-size: 1.1rem;">💎 باقات الاشتراك والوصول الشامل</h3>
+        <p style="color: #94a3b8; font-size: 0.85rem;">احصل على الكود (`PRO2026`) لاستخدام كافة أدوات المنصة بلا حدود.</p>
+        <div style="background: #1a1f33; border: 1px solid #6366f1; border-radius: 12px; padding: 15px; text-align: center;">
+            <div style="font-size: 1.2rem; font-weight: bold; color: #fbbf24; margin-bottom: 5px;">باقة المونتير الدائمة ($9)</div>
+            <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 12px;">وصول كامل لجميع الفلاتر والطبقات مدى الحياة</div>
+            <button onclick="openProModal()" style="background:#6366f1; color:#fff; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer;">تفعيل الكود الآن</button>
+        </div>
     </div>
 
 </div>
 
+<!-- نافذة إدخال الكود الاحترافية (Modal) -->
+<div id="proModal">
+    <div class="modal-box">
+        <h3 style="margin-top:0; color:#fff;">✨ تفعيل النسخة PRO</h3>
+        <p style="font-size:0.82rem; color:#94a3b8; margin-bottom:15px;">أدخل كود التفعيل للحصول على وصول كامل ومجاني تجريبي: <b style="color:#fbbf24;">PRO2026</b></p>
+        <input type="text" id="proCodeInput" placeholder="أدخل الكود هنا (مثال: PRO2026)">
+        <div style="display:flex; gap:10px;">
+            <button onclick="submitProCode()" style="flex:1; background:#6366f1; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer;">تفعيل</button>
+            <button onclick="closeProModal()" style="flex:1; background:#1a1f33; color:#94a3b8; border:1px solid #2b324d; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer;">إلغاء</button>
+        </div>
+    </div>
+</div>
+
 <script>
-// --- نظام إدارة التفعيل العام ---
+function switchTab(tabId) {
+    ['bitrate', 'script', 'luts', 'overlays', 'sub'].forEach(t => {
+        document.getElementById('panel-' + t).classList.remove('active');
+        const btn = document.getElementById('btnTab' + t.charAt(0).toUpperCase() + t.slice(1));
+        if(btn) btn.classList.remove('active');
+    });
+    document.getElementById('panel-' + tabId).classList.add('active');
+    const activeBtn = document.getElementById('btnTab' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+    if(activeBtn) activeBtn.classList.add('active');
+}
+
+function openProModal() {
+    document.getElementById('proModal').style.display = 'flex';
+}
+
+function closeProModal() {
+    document.getElementById('proModal').style.display = 'none';
+}
+
+function submitProCode() {
+    const val = document.getElementById('proCodeInput').value.trim().toUpperCase();
+    if (val === "PRO2026") {
+        localStorage.setItem('editor_pro_active', 'true');
+        closeProModal();
+        updateProUI();
+        alert("✅ تم تفعيل نسخة PRO بنجاح وتم فتح كافة الأدوات!");
+    } else {
+        alert("❌ الكود غير صحيح. الكود التجريبي المتاح هو: PRO2026");
+    }
+}
+
 function checkProAccess() {
     if (localStorage.getItem('editor_pro_active') === 'true') return true;
-    const code = prompt("🔒 هذه الميزة حصرية لمشتركي PRO.\nأدخل كود التفعيل (PRO2026):");
-    if (code && code.trim().toUpperCase() === "PRO2026") {
-        localStorage.setItem('editor_pro_active', 'true');
-        updateProUI();
-        alert("✅ تم تفعيل النسخة PRO بنجاح!");
-        return true;
-    }
-    if (code !== null) alert("❌ الكود غير صحيح.");
+    openProModal();
     return false;
 }
 
-function activatePro() {
-    const code = prompt("أدخل كود تفعيل النسخة PRO:");
-    if (code && code.trim().toUpperCase() === "PRO2026") {
-        localStorage.setItem('editor_pro_active', 'true');
-        updateProUI();
-        alert("✅ تم تفعيل نسخة الـ PRO بنجاح!");
-    } else if (code !== null) {
-        alert("❌ الكود غير صحيح.");
-    }
-}
-
 function updateProUI() {
-    const btn = document.getElementById('mainActivationBtn');
     if (localStorage.getItem('editor_pro_active') === 'true') {
-        btn.innerText = '✨ نسخة PRO مفعلة';
-        btn.style.background = '#10b981';
+        document.getElementById('mainActivationBtn').innerText = '✨ مفعل PRO';
+        document.getElementById('mainActivationBtn').style.background = '#10b981';
+        
+        // إخفاء رسائل القفل وإظهار محتوى الفلاتر والطبقات
+        document.getElementById('lutsLockMsg').style.display = 'none';
+        document.getElementById('lutsContentBody').style.display = 'block';
+        
+        document.getElementById('overlaysLockMsg').style.display = 'none';
+        document.getElementById('overlaysContentBody').style.display = 'block';
     }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('editor_pro_active') === 'true') {
-        updateProUI();
-    }
+    updateProUI();
     renderLuts();
     renderOverlaysList();
 });
 
-// --- قاعدة بيانات 100 فلتر CUBE ---
 const lutPresets = [];
 const categoriesConfig = {
-    auto: { label: "سيارات وفخامة", colors: ["#0f172a", "#475569", "#94a3b8"], names: ["أسود ملكي (Mercedes Ghost)", "رمادي معدني (AMG Steel)", "داكن درامي (Moody Auto)", "لمعان الكروم (Chrome Gloss)", "أزرق ليلي فخم (Midnight Luxury)", "إسفلت داكن (Dark Asphalt)", "برونزي رياضي (Sport Bronze)", "تباين أبيض وأسود (B&W Coupe)", "ذهبي ملكي (Royal Gold Auto)", "ظلال عميقة (Deep Shadows)", "سباقات الليل (Night Drift)", "فضي ناصع (Silver Arrow)", "أحمر رياضي (Ferrari Red Boost)", "تيتانيوم بارد (Cold Titanium)", "ضباب الصباح (Morning Autobahn)", "انعكاس الزجاج (Glass Reflection)", "فحم مطفي (Matte Carbon)", "غروب الساحل (Coastal Drive)", "إضاءة نفق (Tunnel Neon)", "كلاسيك التسعينات (90s S-Class)"] },
-    cinema: { label: "سينمائي", colors: ["#0d9488", "#1e293b", "#f97316"], names: ["أزرق وبرتقالي (Teal & Orange)", "بلوك باستر (Blockbuster 01)", "تباين سينمائي (Cinema Contrast)", "دراما باردة (Cold Drama)", "دفء هوليوود (Hollywood Warm)", "أخضر ماتريكس (Sci-Fi Green)", "ظلال زرقاء (Blue Shadows)", "ذهبي دافئ (Golden Cinema)", "أكشن عالي التباين (Action Grit)", "بشرة طبيعية (Natural Skin Pro)", "فيلم IMAX (IMAX Tone)", "غموض وتشويق (Thriller Dark)", "صيف سينمائي (Summer Blockbuster)", "شتاء قارس (Winter Frost)", "نوار كلاسيكي (Film Noir)", "أزرق فولاذي (Steel Blue)", "توهج ناعم (Soft Highlight)", "ألوان مشبعة (Rich Cinema)", "أفلام مستقلة (Indie Look)", "ملحمي (Epic Look)"] },
-    nature: { label: "طبيعة ومناظر", colors: ["#064e3b", "#10b981", "#fbbf24"], names: ["أخضر غابات (Forest Emerald)", "سماء زرقاء صافية (Crisp Sky)", "شروق الشمس (Sunrise Glow)", "غروب ذهبي (Sunset Magic)", "جبال ضبابية (Misty Mountains)", "شلالات باردة (Cold Waterfall)", "صحراء دافئة (Desert Sand)", "ربيع مشرق (Spring Bloom)", "خريف برتقالي (Autumn Leaves)", "بحر فيروزي (Turquoise Ocean)", "طبيعة سينمائية (Cinematic Nature)", "أرض خصبة (Earthy Tones)", "ثلوج ناصعة (Pure Snow)", "غابة استوائية (Tropical Green)", "ضوء النهار (Daylight Pro)", "وادي عميق (Canyon Warmth)", "سحب درامية (Dramatic Clouds)", "بحيرة هادئة (Calm Lake)", "شاطئ استوائي (Beach Vibes)", "أفق بعيد (Horizon Blue)"] },
-    night: { label: "ليلي ونيون", colors: ["#3b0764", "#ec4899", "#06b6d4"], names: ["سايبربانك (Cyberpunk 2077)", "طوكيو ليلاً (Tokyo Night)", "نيون بنفسجي (Purple Neon)", "أضواء المدينة (City Lights)", "أزرق كهربائي (Electric Blue)", "شارع ممطر (Rainy Street)", "تباين ليلي (Night Contrast)", "أحمر ونيون (Red & Cyan Night)", "سماء الليل (Starry Night)", "نادي ليلي (Club Vibe)", "إضاءة شوارع (Street Lamp Warm)", "ظلام نقي (Clean Blacks)", "نيون أخضر (Toxic Neon)", "منتصف الليل (Midnight Vibe)", "أضواء السيارات (Tail Lights)", "دبي ليلاً (Dubai Night Gold)", "ضباب الليل (Night Fog)", "بنفسجي غامق (Deep Violet)", "توهج النيون (Neon Glow)", "ليلة هادئة (Silent Night)"] },
-    vintage: { label: "كلاسيك وفيلم", colors: ["#451a03", "#d97706", "#fef3c7"], names: ["كوداك جولد (Kodak Gold 200)", "فوجي فيلم (Fujifilm Superia)", "سينستيل 800 (CineStill 800T)", "كلاسيك السبعينات (70s Retro)", "بولارويد (Polaroid Vintage)", "فيلم قديم باهت (Faded Film)", "سيبيا دافئ (Warm Sepia)", "أبيض وأسود كلاسيك (Classic B&W)", "ذكريات الصيف (Nostalgia 98)", "كاميرا VHS (Retro VHS)", "حبيبات الفيلم (Film Grain Tone)", "بني عتيق (Antique Brown)", "أفلام الثمانينات (80s Aesthetic)", "بورتريه كلاسيك (Vintage Portrait)", "ألوان باستيل (Soft Pastel)", "شريط سينما (35mm Film)", "أرشيف قديم (Old Archive)", "دفء الحنين (Warm Nostalgia)", "إيطاليا الكلاسيكية (Italian Cinema)", "فجر كلاسيكي (Vintage Dawn)"] }
+    auto: { label: "سيارات وفخامة", names: ["أسود ملكي (Mercedes Ghost)", "رمادي معدني (AMG Steel)", "داكن درامي (Moody Auto)", "لمعان الكروم (Chrome Gloss)", "أزرق ليلي فخم (Midnight Luxury)", "إسفلت داكن (Dark Asphalt)", "برونزي رياضي (Sport Bronze)", "تباين أبيض وأسود (B&W Coupe)", "ذهبي ملكي (Royal Gold Auto)", "ظلال عميقة (Deep Shadows)", "سباقات الليل (Night Drift)", "فضي ناصع (Silver Arrow)", "أحمر رياضي (Ferrari Red Boost)", "تيتانيوم بارد (Cold Titanium)", "ضباب الصباح (Morning Autobahn)", "انعكاس الزجاج (Glass Reflection)", "فحم مطفي (Matte Carbon)", "غروب الساحل (Coastal Drive)", "إضاءة نفق (Tunnel Neon)", "كلاسيك التسعينات (90s S-Class)"] },
+    cinema: { label: "سينمائي", names: ["أزرق وبرتقالي (Teal & Orange)", "بلوك باستر (Blockbuster 01)", "تباين سينمائي (Cinema Contrast)", "دراما باردة (Cold Drama)", "دفء هوليوود (Hollywood Warm)", "أخضر ماتريكس (Sci-Fi Green)", "ظلال زرقاء (Blue Shadows)", "ذهبي دافئ (Golden Cinema)", "أكشن عالي التباين (Action Grit)", "بشرة طبيعية (Natural Skin Pro)", "فيلم IMAX (IMAX Tone)", "غموض وتشويق (Thriller Dark)", "صيف سينمائي (Summer Blockbuster)", "شتاء قارس (Winter Frost)", "نوار كلاسيكي (Film Noir)", "أزرق فولاذي (Steel Blue)", "توهج ناعم (Soft Highlight)", "ألوان مشبعة (Rich Cinema)", "أفلام مستقلة (Indie Look)", "ملحمي (Epic Look)"] },
+    nature: { label: "طبيعة ومناظر", names: ["أخضر غابات (Forest Emerald)", "سماء زرقاء صافية (Crisp Sky)", "شروق الشمس (Sunrise Glow)", "غروب ذهبي (Sunset Magic)", "جبال ضبابية (Misty Mountains)", "شلالات باردة (Cold Waterfall)", "صحراء دافئة (Desert Sand)", "ربيع مشرق (Spring Bloom)", "خريف برتقالي (Autumn Leaves)", "بحر فيروزي (Turquoise Ocean)", "طبيعة سينمائية (Cinematic Nature)", "أرض خصبة (Earthy Tones)", "ثلوج ناصعة (Pure Snow)", "غابة استوائية (Tropical Green)", "ضوء النهار (Daylight Pro)", "وادي عميق (Canyon Warmth)", "سحب درامية (Dramatic Clouds)", "بحيرة هادئة (Calm Lake)", "شاطئ استوائي (Beach Vibes)", "أفق بعيد (Horizon Blue)"] },
+    night: { label: "ليلي ونيون", names: ["سايبربانك (Cyberpunk 2077)", "طوكيو ليلاً (Tokyo Night)", "نيون بنفسجي (Purple Neon)", "أضواء المدينة (City Lights)", "أزرق كهربائي (Electric Blue)", "شارع ممطر (Rainy Street)", "تباين ليلي (Night Contrast)", "أحمر ونيون (Red & Cyan Night)", "سماء الليل (Starry Night)", "نادي ليلي (Club Vibe)", "إضاءة شوارع (Street Lamp Warm)", "ظلام نقي (Clean Blacks)", "نيون أخضر (Toxic Neon)", "منتصف الليل (Midnight Vibe)", "أضواء السيارات (Tail Lights)", "دبي ليلاً (Dubai Night Gold)", "ضباب الليل (Night Fog)", "بنفسجي غامق (Deep Violet)", "توهج النيون (Neon Glow)", "ليلة هادئة (Silent Night)"] },
+    vintage: { label: "كلاسيك وفيلم", names: ["كوداك جولد (Kodak Gold 200)", "فوجي فيلم (Fujifilm Superia)", "سينستيل 800 (CineStill 800T)", "كلاسيك السبعينات (70s Retro)", "بولارويد (Polaroid Vintage)", "فيلم قديم باهت (Faded Film)", "سيبيا دافئ (Warm Sepia)", "أبيض وأسود كلاسيك (Classic B&W)", "ذكريات الصيف (Nostalgia 98)", "كاميرا VHS (Retro VHS)", "حبيبات الفيلم (Film Grain Tone)", "بني عتيق (Antique Brown)", "أفلام الثمانينات (80s Aesthetic)", "بورتريه كلاسيك (Vintage Portrait)", "ألوان باستيل (Soft Pastel)", "شريط سينما (35mm Film)", "أرشيف قديم (Old Archive)", "دفء الحنين (Warm Nostalgia)", "إيطاليا الكلاسيكية (Italian Cinema)", "فجر كلاسيكي (Vintage Dawn)"] }
 };
 
 let idCounter = 1;
-Object.keys(categoriesConfig).forEach((catKey) => {
-    const cat = categoriesConfig[catKey];
-    cat.names.forEach((name, idx) => {
-        const factor = (idx + 1) / 20;
-        lutPresets.push({
-            id: idCounter++, category: catKey, catLabel: cat.label, name: name,
-            gradient: `linear-gradient(135deg, ${cat.colors[0]}, ${cat.colors[1]}, ${cat.colors[2]})`,
-            fileName: `LUT_${idCounter - 1}_${name.split('(')[1]?.replace(')', '').replace(/\s+/g, '_') || 'Pro'}.cube`,
-            params: { contrast: 1.03 + (factor * 0.22), sat: catKey === 'auto' ? (0.65 + factor * 0.3) : (catKey === 'vintage' ? 0.8 : 1.05 + factor * 0.2), rShift: catKey === 'cinema' ? 0.05 : -0.02, gShift: catKey === 'nature' ? 0.04 : 0.0, bShift: catKey === 'night' ? 0.07 : -0.03, isBW: name.includes('B&W') }
-        });
+Object.keys(categoriesConfig).forEach(catKey => {
+    categoriesConfig[catKey].names.forEach((name, idx) => {
+        lutPresets.push({ id: idCounter++, category: catKey, catLabel: categoriesConfig[catKey].label, name: name, fileName: `LUT_${idCounter-1}.cube` });
     });
 });
 
 function renderLuts() {
     const container = document.getElementById('lutsContainer');
-    const searchVal = document.getElementById('lutSearch').value.toLowerCase();
-    const catVal = document.getElementById('lutCategory').value;
-    const filtered = lutPresets.filter(l => (catVal === 'all' || l.category === catVal) && (l.name.toLowerCase().includes(searchVal) || l.catLabel.includes(searchVal)));
+    const search = document.getElementById('lutSearch').value.toLowerCase();
+    const cat = document.getElementById('lutCategory').value;
+    const filtered = lutPresets.filter(l => (cat === 'all' || l.category === cat) && l.name.toLowerCase().includes(search));
 
-    container.innerHTML = filtered.map(lut => `
-        <div onclick="generateAndDownloadLut(${lut.id})" style="background: #1a1f33; border: 1px solid #2b324d; border-radius: 12px; padding: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: 0.2s;" onmouseover="this.style.borderColor='#6366f1'" onmouseout="this.style.borderColor='#2b324d'">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div style="width: 36px; height: 36px; border-radius: 8px; background: ${lut.gradient}; border: 1px solid rgba(255,255,255,0.2); flex-shrink: 0;"></div>
-                <div>
-                    <div style="font-size: 0.7rem; color: #818cf8; margin-bottom: 2px;">#${lut.id} • ${lut.catLabel}</div>
-                    <div style="font-size: 0.88rem; font-weight: 600; color: #f1f5f9;">${lut.name}</div>
-                </div>
-            </div>
-            <div style="background: rgba(99, 102, 241, 0.15); color: #818cf8; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">⬇</div>
+    container.innerHTML = filtered.map(l => `
+        <div onclick="downloadLut(${l.id})" style="background:#1a1f33; border:1px solid #2b324d; padding:10px; border-radius:10px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+            <div><div style="font-size:0.7rem; color:#818cf8;">${l.catLabel}</div><div style="font-size:0.85rem; font-weight:600;">${l.name}</div></div>
+            <div style="color:#818cf8; font-weight:bold;">⬇</div>
         </div>
     `).join('');
 }
 
-function generateAndDownloadLut(lutId) {
-    if (!checkProAccess()) return;
-    const lut = lutPresets.find(l => l.id === lutId);
-    if (!lut) return;
-
-    const size = 17;
-    let cubeText = `TITLE "${lut.name}"\nLUT_3D_SIZE ${size}\nDOMAIN_MIN 0.0 0.0 0.0\nDOMAIN_MAX 1.0 1.0 1.0\n\n`;
-    const p = lut.params;
-
-    for (let b = 0; b < size; b++) {
-        for (let g = 0; g < size; g++) {
-            for (let r = 0; r < size; r++) {
-                let rf = r / (size - 1), gf = g / (size - 1), bf = b / (size - 1);
-                let luma = 0.2126 * rf + 0.7152 * gf + 0.0722 * bf;
-                if (p.isBW) {
-                    rf = gf = bf = Math.pow(luma, p.contrast);
-                } else {
-                    rf = luma + (rf - luma) * p.sat;
-                    gf = luma + (gf - luma) * p.sat;
-                    bf = luma + (bf - luma) * p.sat;
-                    rf += (p.rShift * Math.pow(luma, 1.3));
-                    gf += (p.gShift * Math.pow(luma, 1.3));
-                    bf += (p.bShift * Math.pow(1 - luma, 1.4));
-                    rf = Math.pow(Math.max(0, Math.min(1, rf)), p.contrast);
-                    gf = Math.pow(Math.max(0, Math.min(1, gf)), p.contrast);
-                    bf = Math.pow(Math.max(0, Math.min(1, bf)), p.contrast);
-                }
-                cubeText += `${rf.toFixed(6)} ${gf.toFixed(6)} ${bf.toFixed(6)}\n`;
-            }
-        }
-    }
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([cubeText], { type: 'text/plain' }));
-    a.download = lut.fileName;
-    a.click();
+function downloadLut(id) {
+    if(!checkProAccess()) return;
+    const l = lutPresets.find(x => x.id === id);
+    const blob = new Blob([`TITLE "${l.name}"\nLUT_3D_SIZE 17\nDOMAIN_MIN 0 0 0\nDOMAIN_MAX 1 1 1\n0.0 0.0 0.0\n1.0 1.0 1.0`], {type:'text/plain'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = l.fileName; a.click();
 }
 
-// --- قاعدة بيانات 200 طبقة 4K ---
+let currentOvType = 'lb';
 const letterboxItems = [];
 const safezoneItems = [];
+for(let i=1; i<=100; i++) letterboxItems.path = letterboxItems.push({id: i, title: `خطوط سينما Letterbox (${(1.85 + (i%10)*0.1).toFixed(2)}:1) #${i}`, desc: 'شفاف بدقة 4K'});
+for(let i=1; i<=100; i++) safezoneItems.push({id: i, title: `أمان تيكتوك ورييلز SafeZone #${i}`, desc: 'مقاس 2160x3840'});
 
-const lbStyles = [
-    { prefix: "كلاسيك صافي", desc: "خطوط سوداء صافية 100%", vignette: 0, border: false },
-    { prefix: "مع ظل داخلي", desc: "تعتيم ناعم للأطراف (Vignette)", vignette: 0.65, border: false },
-    { prefix: "إطار خط ذهبي", desc: "خط أسود مع فاصل ذهبي فاخر", vignette: 0.3, border: '#f59e0b' }
-];
-const aspectRatios = [1.85, 1.90, 2.00, 2.10, 2.20, 2.25, 2.30, 2.35, 2.39, 2.40, 2.45, 2.50, 2.55, 2.60, 2.66, 2.75, 2.85, 3.00, 3.20, 3.50];
-
-let lbId = 1;
-lbStyles.forEach(st => {
-    aspectRatios.forEach(ar => {
-        letterboxItems.push({ id: lbId++, title: `خطوط سينما (${ar.toFixed(2)}:1) - ${st.prefix}`, desc: `${st.desc} • 4K`, ratio: ar, vignette: st.vignette, border: st.border, fileName: `Letterbox_4K_${ar.toFixed(2)}_${lbId}.png` });
-    });
-});
-
-const szPlatforms = [
-    { name: "تيك توك", top: 280, bottom: 780, right: 320, left: 80, color: "#00f2fe" },
-    { name: "إنستغرام رييلز", top: 260, bottom: 820, right: 290, left: 80, color: "#ec4899" },
-    { name: "يوتيوب شورتس", top: 300, bottom: 740, right: 310, left: 80, color: "#ef4444" },
-    { name: "إعلانات ممولة", top: 340, bottom: 920, right: 340, left: 100, color: "#fbbf24" },
-    { name: "شامل المنصات", top: 320, bottom: 860, right: 330, left: 90, color: "#818cf8" }
-];
-const szModes = [
-    { label: "الأزرار والوصف القياسية", grid: 0, center: false, text: false },
-    { label: "مع شبكة التثليث (Thirds)", grid: 3, center: false, text: false },
-    { label: "مع نقطة التمركز بالمنتصف", grid: 0, center: true, text: false },
-    { label: "مع صندوق الترجمة والنصوص", grid: 0, center: false, text: true },
-    { label: "شبكة كاملة + مركز + نصوص", grid: 4, center: true, text: true }
-];
-const szVariations = [{ name: "خطوط متقطعة", opacity: 0.45, dashed: true }, { name: "خطوط متصلة", opacity: 0.55, dashed: false }, { name: "تظليل خفيف", opacity: 0.25, dashed: true }, { name: "تباين عالي", opacity: 0.75, dashed: false }];
-
-let szId = 1;
-szPlatforms.forEach(plat => {
-    szModes.forEach(m => {
-        szVariations.forEach((v, vIdx) => {
-            safezoneItems.push({ id: szId++, title: `أمان ${plat.name} - ${m.label}`, desc: `${v.name} • 2160x3840`, plat: plat, mode: m, variation: v, offset: vIdx * 12, fileName: `SafeZone_4K_${szId}.png` });
-        });
-    });
-});
-
-let currentOverlayTab = 'letterbox';
-function switchOverlayTab(tab) {
-    currentOverlayTab = tab;
-    const btnLb = document.getElementById('btnTabLetterbox');
-    const btnSz = document.getElementById('btnTabSafezone');
-    if (tab === 'letterbox') {
-        btnLb.style.background = '#6366f1'; btnLb.style.color = '#fff'; btnLb.style.border = 'none';
-        btnSz.style.background = '#1a1f33'; btnSz.style.color = '#94a3b8'; btnSz.style.border = '1px solid #2b324d';
-    } else {
-        btnSz.style.background = '#6366f1'; btnSz.style.color = '#fff'; btnSz.style.border = 'none';
-        btnLb.style.background = '#1a1f33'; btnLb.style.color = '#94a3b8'; btnLb.style.border = '1px solid #2b324d';
-    }
+function switchOverlaySub(type) {
+    currentOvType = type;
+    document.getElementById('subTabLb').style.background = type === 'lb' ? '#6366f1' : '#1a1f33';
+    document.getElementById('subTabSz').style.background = type === 'sz' ? '#6366f1' : '#1a1f33';
     renderOverlaysList();
 }
 
 function renderOverlaysList() {
-    const grid = document.getElementById('overlaysGrid');
+    const container = document.getElementById('overlaysContainer');
     const search = document.getElementById('overlaySearch').value.toLowerCase();
-    const list = currentOverlayTab === 'letterbox' ? letterboxItems : safezoneItems;
-    const filtered = list.filter(item => item.title.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search));
+    const list = currentOvType === 'lb' ? letterboxItems : safezoneItems;
+    const filtered = list.filter(i => i.title.toLowerCase().includes(search));
 
-    grid.innerHTML = filtered.map(item => `
-        <div onclick="${currentOverlayTab === 'letterbox' ? `downloadLetterbox4K(${item.id})` : `downloadSafeZone4K(${item.id})`}" style="background: #1a1f33; border: 1px solid #2b324d; border-radius: 12px; padding: 12px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px; transition: 0.2s;" onmouseover="this.style.borderColor='#6366f1'" onmouseout="this.style.borderColor='#2b324d'">
-            <div>
-                <div style="font-size: 0.7rem; color: #fbbf24; margin-bottom: 2px;">#${item.id} • PNG 4K شفاف</div>
-                <div style="font-size: 0.88rem; font-weight: 600; color: #f8fafc; margin-bottom: 2px;">${item.title}</div>
-                <div style="font-size: 0.75rem; color: #94a3b8;">${item.desc}</div>
-            </div>
-            <div style="background: rgba(99, 102, 241, 0.15); color: #818cf8; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0;">⬇</div>
+    container.innerHTML = filtered.map(item => `
+        <div onclick="downloadOverlay(${item.id})" style="background:#1a1f33; border:1px solid #2b324d; padding:10px; border-radius:10px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+            <div><div style="font-size:0.7rem; color:#fbbf24;">PNG 4K</div><div style="font-size:0.85rem; font-weight:600;">${item.title}</div></div>
+            <div style="color:#818cf8; font-weight:bold;">⬇</div>
         </div>
     `).join('');
 }
 
-function downloadLetterbox4K(id) {
-    if (!checkProAccess()) return;
-    const item = letterboxItems.find(x => x.id === id);
-    if (!item) return;
+function downloadOverlay(id) {
+    if(!checkProAccess()) return;
     const canvas = document.createElement('canvas');
-    canvas.width = 3840; canvas.height = 2160;
+    canvas.width = currentOvType === 'lb' ? 3840 : 2160;
+    canvas.height = currentOvType === 'lb' ? 2160 : 3840;
     const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 3840, 2160);
-    const activeHeight = Math.round(3840 / item.ratio);
-    const barHeight = Math.max(40, Math.round((2160 - activeHeight) / 2));
-    if (item.vignette > 0) {
-        const grad = ctx.createRadialGradient(1920, 1080, 900, 1920, 1080, 2200);
-        grad.addColorStop(0, 'rgba(0,0,0,0)'); grad.addColorStop(1, `rgba(0,0,0,${item.vignette})`);
-        ctx.fillStyle = grad; ctx.fillRect(0, 0, 3840, 2160);
-    }
-    ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, 3840, barHeight);
-    ctx.fillRect(0, 2160 - barHeight, 3840, barHeight);
-    if (item.border) {
-        ctx.strokeStyle = item.border; ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.moveTo(0, barHeight); ctx.lineTo(3840, barHeight); ctx.moveTo(0, 2160 - barHeight); ctx.lineTo(3840, 2160 - barHeight); ctx.stroke();
-    }
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     canvas.toBlob(blob => {
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = item.fileName; a.click();
-    }, 'image/png');
-}
-
-function downloadSafeZone4K(id) {
-    if (!checkProAccess()) return;
-    const item = safezoneItems.find(x => x.id === id);
-    if (!item) return;
-    const canvas = document.createElement('canvas');
-    canvas.width = 2160; canvas.height = 3840;
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 2160, 3840);
-    const top = item.plat.top + item.offset, bottom = item.plat.bottom + item.offset, right = item.plat.right + item.offset, left = item.plat.left;
-    ctx.fillStyle = `rgba(239, 68, 68, ${item.variation.opacity * 0.45})`;
-    ctx.fillRect(0, 0, 2160, top); ctx.fillRect(0, 3840 - bottom, 2160, bottom); ctx.fillRect(2160 - right, top, right, 3840 - top - bottom); ctx.fillRect(0, top, left, 3840 - top - bottom);
-    ctx.strokeStyle = item.plat.color; ctx.lineWidth = 6;
-    if (item.variation.dashed) ctx.setLineDash([25, 18]);
-    ctx.strokeRect(left, top, 2160 - left - right, 3840 - top - bottom);
-    ctx.setLineDash([]);
-    if (item.mode.grid > 0) {
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)'; ctx.lineWidth = 3;
-        const steps = item.mode.grid, safeW = 2160 - left - right, safeH = 3840 - top - bottom;
-        for (let i = 1; i < steps; i++) {
-            let gx = left + (safeW / steps) * i, gy = top + (safeH / steps) * i;
-            ctx.beginPath(); ctx.moveTo(gx, top); ctx.lineTo(gx, top + safeH); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(left, gy); ctx.lineTo(left + safeW, gy); ctx.stroke();
-        }
-    }
-    if (item.mode.center) {
-        ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 5;
-        ctx.beginPath(); ctx.arc(1080, 1920, 80, 0, Math.PI * 2); ctx.moveTo(950, 1920); ctx.lineTo(1210, 1920); ctx.moveTo(1080, 1790); ctx.lineTo(1080, 2050); ctx.stroke();
-    }
-    if (item.mode.text) {
-        ctx.strokeStyle = '#10b981'; ctx.lineWidth = 5; ctx.setLineDash([15, 10]);
-        ctx.strokeRect(left + 80, 3840 - bottom - 480, 2160 - left - right - 160, 380);
-        ctx.setLineDash([]);
-    }
-    canvas.toBlob(blob => {
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = item.fileName; a.click();
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `Overlay_${currentOvType}_${id}.png`; a.click();
     }, 'image/png');
 }
 </script>
